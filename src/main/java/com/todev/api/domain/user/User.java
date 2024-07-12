@@ -1,36 +1,37 @@
-package com.todev.api.domain.epic;
+package com.todev.api.domain.user;
 
-import java.util.Date;
 import java.util.UUID;
 
-import com.todev.api.domain.user.User;
+import com.todev.api.domain.person.Person;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "epic")
+/**
+ * User
+ */
+@Table(name = "user")
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Epic {
+@AllArgsConstructor
+public class User {
+
   @Id
   @GeneratedValue
   private UUID id;
-  private String title;
-  private String desc;
-  private Boolean status;
-  private Date createdAt;
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+  private String login;
+  private String password;
+  @OneToOne
+  @JoinColumn(name = "person_id")
+  private Person person;
 }
