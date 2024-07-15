@@ -1,7 +1,7 @@
 services:
   postgres:
-    image: postgres:16
     container_name: todev-postgres
+    image: postgres:16
     ports:
       - '5432:5432'
     environment:
