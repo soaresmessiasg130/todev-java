@@ -1,10 +1,19 @@
 package com.todev.api.services;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.todev.api.config.AWSConfig;
 import com.todev.api.domain.task.Task;
 import com.todev.api.domain.task.TaskCreateDto;
 import lombok.Getter;
@@ -17,11 +26,17 @@ import lombok.Setter;
 @Service
 public class TaskService {
 
+  @Value("${aws.bucket.name}")
+  private String bucketName;
+
+  @Autowired
+  private AmazonS3 amazonS3Client;
+
   public Task createTask(TaskCreateDto data) {
     String imageUrl = null;
 
     if (data.image() != null) {
-      imageUrl = this.uploadImg(data.image());
+      imageUrl = this.uploadFile(data.image());
     }
 
     Task newTask = new Task();
@@ -30,9 +45,40 @@ public class TaskService {
     newTask.setImageUrl(imageUrl);
     newTask.setDone(data.done());
     newTask.setCreatedAt(new Date());
+
+    return newTask;
   }
 
-  private String uploadImg(final MultipartFile image) {
-    return "";
+  private String uploadFile(final MultipartFile file) {
+    String filenameToPut = UUID.randomUUID() + "-" + file.getOriginalFilename();
+
+    try {
+      File fileToPut = this.convertMultipartToFile(file);
+
+      amazonS3Client.putObject(bucketName, filenameToPut, fileToPut);
+
+      fileToPut.delete();
+
+      return amazonS3Client.getUrl(bucketName, filenameToPut).toString();
+    } catch (Exception e) {
+      System.out.println("Error at push file to AWS S3 Bucket: " + bucketName);
+
+      return null;
+    }
   }
+
+  private File convertMultipartToFile(MultipartFile multipartFile) throws IOException {
+    String originalFilename = Objects.requireNonNull(multipartFile.getOriginalFilename());
+
+    File newFile = new File(originalFilename);
+
+    FileOutputStream fileOutput = new FileOutputStream(newFile);
+
+    fileOutput.write(multipartFile.getBytes());
+
+	  fileOutput.close();
+
+    return newFile;
+  }
+
 }
