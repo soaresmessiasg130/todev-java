@@ -16,6 +16,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.todev.api.config.AWSConfig;
 import com.todev.api.domain.task.Task;
 import com.todev.api.domain.task.TaskCreateDto;
+import com.todev.api.repositories.TaskRepository;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +34,9 @@ public class TaskService {
   @Autowired
   private AmazonS3 amazonS3Client;
 
+  @Autowired
+  private TaskRepository taskRepository;
+
   public Task createTask(TaskCreateDto data) {
     String imageUrl = null;
 
@@ -47,7 +52,9 @@ public class TaskService {
     newTask.setDone(data.done());
     newTask.setCreatedAt(new Date());
 
-    return newTask;
+    var res = this.taskRepository.save(newTask);
+
+    return res;
   }
 
   private String uploadFile(final MultipartFile file) {
