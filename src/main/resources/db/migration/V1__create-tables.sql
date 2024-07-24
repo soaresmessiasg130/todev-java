@@ -17,7 +17,7 @@ create table "user" (
 create table epic (
   id UUID default gen_random_uuid() primary key,
   title text null,
-  "desc" text null,
+  description text null,
   status boolean not null,
   created_at timestamp null,
   user_id UUID,
@@ -27,7 +27,7 @@ create table epic (
 create table task (
   id UUID default gen_random_uuid() primary key,
   title text null,
-  "desc" text null,
+  description text null,
   image_url text null,
   done boolean not null,
   created_at timestamp null,

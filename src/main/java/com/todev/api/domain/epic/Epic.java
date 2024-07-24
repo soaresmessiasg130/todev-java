@@ -27,7 +27,7 @@ public class Epic {
   @GeneratedValue
   private UUID id;
   private String title;
-  private String desc;
+  private String description;
   private Boolean status;
   private Date createdAt;
   @ManyToOne

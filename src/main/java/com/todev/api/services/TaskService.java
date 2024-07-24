@@ -40,8 +40,9 @@ public class TaskService {
     }
 
     Task newTask = new Task();
+
     newTask.setTitle(data.title());
-    newTask.setDesc(data.desc());
+    newTask.setDescription(data.description());
     newTask.setImageUrl(imageUrl);
     newTask.setDone(data.done());
     newTask.setCreatedAt(new Date());

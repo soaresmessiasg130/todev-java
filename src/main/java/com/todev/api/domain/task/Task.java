@@ -27,10 +27,10 @@ public class Task {
   @GeneratedValue
   private UUID id;
   private String title;
-  private String desc;
+  private String description;
   private String imageUrl;
   private Boolean done;
-  private Date createdAt; 
+  private Date createdAt;
   @ManyToOne
   @JoinColumn(name = "epic_id")
   private Epic epic;
