@@ -34,4 +34,60 @@ public class Task {
   @ManyToOne
   @JoinColumn(name = "epic_id")
   private Epic epic;
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
+  public Boolean getDone() {
+    return done;
+  }
+
+  public void setDone(Boolean done) {
+    this.done = done;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Epic getEpic() {
+    return epic;
+  }
+
+  public void setEpic(Epic epic) {
+    this.epic = epic;
+  }
 }
