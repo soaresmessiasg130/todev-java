@@ -13,14 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.todev.api.config.AWSConfig;
 import com.todev.api.domain.task.Task;
 import com.todev.api.domain.task.TaskCreateDto;
 import com.todev.api.repositories.TaskRepository;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * TaskService
@@ -69,7 +64,7 @@ public class TaskService {
 
       return amazonS3Client.getUrl(bucketName, filenameToPut).toString();
     } catch (Exception e) {
-      System.out.println("Error at push file to AWS S3 Bucket: " + bucketName);
+      System.out.println("Error at push file to AWS S3 Bucket: " + bucketName + " Error: " + e.getMessage());
 
       return null;
     }
