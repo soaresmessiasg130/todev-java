@@ -18,7 +18,7 @@ import lombok.Setter;
 /**
  * User
  */
-@Table(name = "user")
+@Table(name = "todev_user", schema = "public")
 @Entity
 @Getter
 @Setter

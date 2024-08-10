@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "epic")
+@Table(name = "todev_epic", schema = "public")
 @Entity
 @Getter
 @Setter
